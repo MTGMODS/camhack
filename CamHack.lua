@@ -120,10 +120,8 @@ function isMonetLoader() return MONET_VERSION ~= nil end
 
 if isMonetLoader() then
 	widgets = require('widgets')
-
 	gta = ffi.load('GTASA') 
-	ffi.cdef[[ void _Z12AND_OpenLinkPKc(const char* link); ]] -- функция для открытия ссылок
-
+	ffi.cdef[[ void _Z12AND_OpenLinkPKc(const char* link); ]]
 end
 
 if not isMonetLoader() and MONET_DPI_SCALE == nil then MONET_DPI_SCALE = 1.0 end
@@ -140,7 +138,7 @@ local fa = require('fAwesome6_solid')
 local sizeX, sizeY = getScreenResolution()
 
 local MainWindow = imgui.new.bool()
-local camhack_type = imgui.new.int(settings.general.camhack_type)
+local camhack_type = imgui.new.int(settings.general.camhack_type or 1)
 
 local CamHackWindow = imgui.new.bool()
 
@@ -404,7 +402,7 @@ function main()
 				end;
 			else
 				if ((isMonetLoader()) and (settings.general.camhack_type == 2)) then
-					if (WidgetPressed(WIDGET_CAM_TOGGLE)) then
+					if (isWidgetPressed(WIDGET_CAM_TOGGLE)) then
 						camhack_on();
 					end
 				elseif ((not isMonetLoader()) and (settings.general.camhack_type == 1)) then
