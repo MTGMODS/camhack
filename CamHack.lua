@@ -268,6 +268,13 @@ function main()
 
 	check();
 
+	if not isMonetLoader() then
+		pStSet = sampGetServerSettingsPtr()
+		NTdist = mem.getfloat(pStSet + 39)
+		NTwalls = mem.getint8(pStSet + 47)
+		NTshow = mem.getint8(pStSet + 56)
+	end
+
 	sampRegisterChatCommand("cmh", function()
 		MainWindow[0] = not MainWindow[0];
 	end);
@@ -777,7 +784,7 @@ local MainWindow = imgui.OnFrame(
 		if settings.general.enable then
 			if imgui.SmallButton(fa.TOGGLE_ON .. '##enable') then
 				settings.general.enable = false
-				camhack_off()
+				if camhack_active then camhack_off() end
 				CamHackWindow[0] = false
 				save_settings()
 			end
